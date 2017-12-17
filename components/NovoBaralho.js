@@ -1,18 +1,28 @@
 import React from "react";
-import { View, TouchableOpacity, Text, TextInput } from "react-native";
+import {Text} from 'react-native'
+import { Container, Content, Form, Item, Input, Label, Button } from 'native-base';
+import { white } from '../utils/colors.js'
 
 export default class NovoBaralho extends React.Component {
     render() {
       return (
-        <View>
-          <Text>NOVO BARALHO</Text>
-            <View>
-                <TextInput underlineColorAndroid='transparent' placeholder='Nome' />
-            </View>
-          <TouchableOpacity>
-            <Text>Enviar</Text>
-          </TouchableOpacity>
-        </View>
+        <Container style={{padding: 10}}>
+        <Content>
+          <Form>
+            <Item floatingLabel>
+              <Label>Nome do Baralho</Label>
+              <Input />
+            </Item>
+            <Item stackedLabel last>
+              <Label>Descrição</Label>
+              <Input multiline/>
+            </Item>
+          </Form>
+          <Button block style={{ marginTop: 20 }}>
+            <Text style={{ color: white }}>Salvar</Text>
+          </Button>
+        </Content>
+      </Container>
       );
     }
   }
