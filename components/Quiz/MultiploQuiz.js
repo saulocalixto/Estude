@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Image, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { connect } from 'react-redux'
+import { Shuffle, EstadoPergunta } from '../../utils/helpers'
 import CabecalhoQuiz from './CabecalhoQuiz.js'
 import {
   Container,
@@ -14,6 +15,7 @@ import {
   Button
 } from 'native-base';
 import { NavigationActions } from 'react-navigation'
+import { clearLocalNotification, setLocalNotification } from '../../utils/helpers'
 
 class MultiploQuiz extends Component {
 
@@ -21,28 +23,7 @@ class MultiploQuiz extends Component {
     indice: 0,
     pontuacao: 0,
     desabilitarBotao: true,
-    perguntasSelecionadas: {
-      'resposta': {
-        value: 'resposta',
-        selecionado: false,
-        textColor: '#FE6D38'
-      },
-      'opcao2': {
-        value: 'opcao2',
-        selecionado: false,
-        textColor: '#FE6D38'
-      },
-      'opcao3': {
-        value: 'opcao3',
-        selecionado: false,
-        textColor: '#FE6D38'
-      },
-      'opcao4': {
-        value: 'opcao4',
-        selecionado: false,
-        textColor: '#FE6D38'
-      }
-    }
+    perguntasSelecionadas: EstadoPergunta
   }
 
   chavePerguntas = [
@@ -53,32 +34,45 @@ class MultiploQuiz extends Component {
   ]
 
   componentWillMount() {
-    this.chavePerguntas = this.shuffle(this.chavePerguntas)
+    this.chavePerguntas = Shuffle(this.chavePerguntas)
+  }
+
+  componentDidUpdate() {
+    const { perguntas } = this.props.navigation.state.params;
+    if (this.state.indice === perguntas.length) {
+      clearLocalNotification()
+        .then(setLocalNotification)
+    }
   }
 
   responder = () => {
 
-    const { perguntas, tituloBaralho } = this.props.navigation.state.params;
-    const { indice, perguntasSelecionadas, pontuacao } = this.state;
-
-    const novoEstado = perguntasSelecionadas;
+    const { perguntas } = this.props.navigation.state.params;
+    const { indice, perguntasSelecionadas } = this.state;
+    const qtdPerguntas = perguntas.length;
 
     this.setState({ indice: indice + 1 })
 
     if (indice < perguntas.length) {
-      this.chavePerguntas = this.shuffle(this.chavePerguntas)
+      this.chavePerguntas = Shuffle(this.chavePerguntas)
     }
 
-    this.chavePerguntas.map(x => {
-      if (novoEstado[x].selecionado && novoEstado[x].value === 'resposta') {
+    const novoEstado = this._mudaStatus(this.chavePerguntas, perguntasSelecionadas);
+
+    this.setState({ perguntasSelecionadas: novoEstado, desabilitarBotao: true })
+  }
+
+  _mudaStatus(chave, perguntasSelecionadas) {
+    const estado = perguntasSelecionadas;
+    const { pontuacao } = this.state;
+    chave.map(x => {
+      if (estado[x].selecionado && estado[x].value === 'resposta') {
         this.setState({ pontuacao: pontuacao + 1 })
       }
-
-      novoEstado[x].selecionado = false
-      novoEstado[x].textColor = '#FE6D38'
-
+      estado[x].selecionado = false
+      estado[x].textColor = '#FE6D38'
     })
-    this.setState({ perguntasSelecionadas: novoEstado, desabilitarBotao: true })
+    return estado;
   }
 
   Marcar = (chave) => {
@@ -95,45 +89,29 @@ class MultiploQuiz extends Component {
     }
   }
 
-  shuffle = (array) => {
-    let counter = array.length;
-
-    while (counter > 0) {
-      let index = Math.floor(Math.random() * counter);
-      counter--;
-
-      let temp = array[counter];
-      array[counter] = array[index];
-      array[index] = temp;
-    }
-
-    return array;
-  }
-
   render() {
-    const { perguntas, tituloBaralho } = this.props.navigation.state.params;
+    const { perguntas } = this.props.navigation.state.params;
     const { indice, perguntasSelecionadas, desabilitarBotao, pontuacao } = this.state;
     const qtdPerguntas = perguntas.length;
     const pergunta = perguntas[indice < qtdPerguntas ? indice : qtdPerguntas - 1];
     questionImg = require('../../imagens/questao.jpg');
     exclamationImg = require('../../imagens/exclamacao.jpg');
     return (
-      <Container>
+      <Container style={{ backgroundColor: 'white' }}>
         <Content>
           <Card style={{ elevation: 3 }}>
             <CabecalhoQuiz
               imagem={indice !== qtdPerguntas ? questionImg : exclamationImg}
               titulo={indice !== qtdPerguntas ? pergunta.pergunta : 'Resultado'}
               indice={indice}
-              qtdPerguntas={qtdPerguntas}
-              tituloBaralho={tituloBaralho} />
+              qtdPerguntas={qtdPerguntas} />
             {indice !== qtdPerguntas ?
               (
                 <View>
                   {
                     this.chavePerguntas.map(x => (
-                      <TouchableOpacity 
-                        onPress={() => this.Marcar(x)} key={x} 
+                      <TouchableOpacity
+                        onPress={() => this.Marcar(x)} key={x}
                         style={styles.questionario}>
                         <Text style={{ color: perguntasSelecionadas[x].textColor, maxWidth: 300 }}>
                           {pergunta[x]}
@@ -144,21 +122,21 @@ class MultiploQuiz extends Component {
                       </TouchableOpacity>
                     ))}
                   <View style={styles.containerBtn}>
-                    <Button iconRight 
-                      style={styles.btnStyle} 
+                    <Button iconRight
+                      style={styles.btnStyle}
                       onPress={() => {
                         perguntasSelecionadas['resposta'].textColor = 'green';
                         this.setState({ perguntasSelecionadas })
-                    }}>
+                      }}>
                       <Text style={{ color: 'white' }}>Resposta Correta</Text>
                     </Button>
-                    <Button disabled={desabilitarBotao} 
-                      iconLeft 
-                      onPress={() => this.responder()} 
+                    <Button disabled={desabilitarBotao}
+                      iconLeft
+                      onPress={() => this.responder()}
                       style={[styles.btnStyle, { backgroundColor: !desabilitarBotao ? 'orange' : 'gray' }]}>
-                      <Text 
+                      <Text
                         style={{ paddingLeft: 10, paddingRight: 10, color: 'white' }}>
-                        { indice === perguntas.length - 1
+                        {indice === perguntas.length - 1
                           ? 'Resultado'
                           : 'Próxima Pergunta'
                         }
@@ -173,23 +151,23 @@ class MultiploQuiz extends Component {
                       <Text>{`Você acertou ${pontuacao} de um total de ${indice} pergunta(s)`}</Text>
                     </Body>
                   </CardItem>
-                  <View 
-                    style={ styles.containerBtn }>
-                    <Button 
-                      iconRight 
-                      style={ styles.btnStyle } 
+                  <View
+                    style={styles.containerBtn}>
+                    <Button
+                      iconRight
+                      style={styles.btnStyle}
                       onPress={() => this.props.navigation.dispatch(NavigationActions.reset({
                         index: 1,
                         actions: [
-                          NavigationActions.navigate({ routeName: 'Home'}),
-                          NavigationActions.navigate({ routeName: 'DetalheBaralho'}),
+                          NavigationActions.navigate({ routeName: 'Home' }),
+                          NavigationActions.navigate({ routeName: 'DetalheBaralho' }),
                         ]
                       }))}>
                       <Text style={{ color: 'white' }}>Voltar ao baralho</Text>
                     </Button>
-                    <Button 
-                      iconLeft 
-                      onPress={() => this.setState({ indice: 0, pontuacao: 0 })} 
+                    <Button
+                      iconLeft
+                      onPress={() => this.setState({ indice: 0, pontuacao: 0 })}
                       style={styles.btnStyle}>
                       <Text style={{ color: 'white' }}>Reiniciar Quiz</Text>
                     </Button>
@@ -214,25 +192,25 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   questionario: {
-    flexDirection: 'row', 
-    justifyContent: 'space-between', 
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     padding: 10
   },
-  containerBtn: { 
-    flexDirection: "row", 
-    flex: 1, 
-    position: "relative", 
-    top: 25, 
-    marginBottom: 20, 
-    left: 0, 
-    right: 0, 
-    justifyContent: 'space-between', 
-    padding: 15 
+  containerBtn: {
+    flexDirection: "row",
+    flex: 1,
+    position: "relative",
+    top: 25,
+    marginBottom: 20,
+    left: 0,
+    right: 0,
+    justifyContent: 'space-between',
+    padding: 15
   },
-  btnStyle: { 
+  btnStyle: {
     paddingLeft: 10,
-    paddingRight: 10, 
-    backgroundColor: 'orange' 
+    paddingRight: 10,
+    backgroundColor: 'orange',
   }
 })
 

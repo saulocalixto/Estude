@@ -1,20 +1,5 @@
 import React, { Component } from 'react';
-import { Image, Text, StyleSheet, View, TouchableOpacity } from 'react-native';
-import {
-  Container,
-  Header,
-  Content,
-  Card,
-  CardItem,
-  Thumbnail,
-  ListItem,
-  Radio,
-  Right,
-  Left,
-  Body,
-  Icon,
-  Button
-} from 'native-base';
+import { Text, StyleSheet, View, TouchableOpacity } from 'react-native';
 import { NavigationActions } from 'react-navigation'
 
 export default class ModalidadeQuiz extends Component {

@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { Text, StyleSheet, TouchableOpacity, View } from 'react-native';
-import { connect } from 'react-redux'
 import { Button } from 'native-base';
 import { NavigationActions } from 'react-navigation'
-import { orange } from '../../utils/colors';
+import { clearLocalNotification, setLocalNotification } from '../../utils/helpers'
 
-class FlashCard extends Component {
+export default class FlashCard extends Component {
 
   state = {
     indice: 0,
@@ -14,15 +13,16 @@ class FlashCard extends Component {
     desabilitarBotao: true,
   }
 
-  chavePerguntas = [
-    'resposta',
-    'opcao2',
-    'opcao3',
-    'opcao4'
-  ]
+  componentDidUpdate() {
+    const { perguntas } = this.props.navigation.state.params;
+    if (this.state.indice === perguntas.length) {
+      clearLocalNotification()
+        .then(setLocalNotification)
+    }
+  }
 
   render() {
-    const { perguntas, tituloBaralho } = this.props.navigation.state.params;
+    const { perguntas } = this.props.navigation.state.params;
     const { indice, perguntasSelecionadas, desabilitarBotao, pontuacao, mostrarResposta } = this.state;
     const qtdPerguntas = perguntas.length;
     const pergunta = perguntas[indice < qtdPerguntas ? indice : qtdPerguntas - 1];
@@ -38,7 +38,9 @@ class FlashCard extends Component {
               </Text>
               {mostrarResposta ? (
                 <View style={{ flexDirection: "row", justifyContent: 'space-between', alignItems: 'flex-end', padding: 15 }}>
-                  <Button iconRight style={{ paddingLeft: 10, paddingRight: 10 }}
+                  <Button 
+                    iconRight 
+                    style={{ paddingLeft: 10, paddingRight: 10 }}
                     onPress={() => this.setState({
                       indice: indice + 1,
                       pontuacao: pontuacao + 1,
@@ -47,10 +49,12 @@ class FlashCard extends Component {
                     transparent light>
                     <Text style={{ fontSize: 20, color: '#dbd7b7' }}>Acertei!</Text>
                   </Button>
-                  <Button iconLeft onPress={() => this.setState({
-                    indice: indice + 1,
-                    mostrarResposta: false
-                  })} style={{ paddingLeft: 10, paddingRight: 10 }}
+                  <Button iconLeft 
+                    onPress={() => this.setState({
+                      indice: indice + 1,
+                      mostrarResposta: false
+                    })} 
+                    style={{ paddingLeft: 10, paddingRight: 10 }}
                     transparent light>
                     <Text style={{ fontSize: 20, color: '#dbd7b7' }}>Errei!</Text>
                   </Button>
@@ -73,8 +77,8 @@ class FlashCard extends Component {
                 {`Você acertou ${pontuacao} de um total de ${perguntas.length} pergunta(s)`}
               </Text>
               <View style={styles.containerBtn}>
-                <Button 
-                  iconRight 
+                <Button
+                  iconRight
                   style={styles.styleBtn}
                   onPress={() => this.props.navigation.dispatch(NavigationActions.reset({
                     index: 1,
@@ -85,9 +89,9 @@ class FlashCard extends Component {
                   }))}>
                   <Text style={{ color: 'white' }}>Voltar ao baralho</Text>
                 </Button>
-                <Button 
-                  iconLeft 
-                  onPress={() => this.setState({ indice: 0, pontuacao: 0 })} 
+                <Button
+                  iconLeft
+                  onPress={() => this.setState({ indice: 0, pontuacao: 0 })}
                   style={styles.styleBtn}>
                   <Text style={{ color: 'white' }}>Reiniciar Quiz</Text>
                 </Button>
@@ -117,15 +121,15 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
   },
-  containerBtn: { 
-    flexDirection: "row", 
-    justifyContent: 'space-between', 
-    padding: 15 
+  containerBtn: {
+    flexDirection: "row",
+    justifyContent: 'space-between',
+    padding: 15
   },
-  styleBtn: { 
-    paddingLeft: 10, 
-    paddingRight: 10, 
-    backgroundColor: 'orange' 
+  styleBtn: {
+    paddingLeft: 10,
+    paddingRight: 10,
+    backgroundColor: 'orange'
   },
   BtnText: {
     color: 'white',
@@ -133,5 +137,3 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
 })
-
-export default connect()(FlashCard)

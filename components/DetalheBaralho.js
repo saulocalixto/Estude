@@ -1,22 +1,15 @@
 import React from "react";
-import { View, TouchableOpacity, StyleSheet, Platform, Text } from "react-native";
-import { white, purple } from '../utils/colors.js'
+import { View, Text } from "react-native";
 import { Button, Card, CardItem, Icon, Right, Body, Container, Content, SwipeRow } from 'native-base';
-import { FontAwesome, Ionicons, Feather } from '@expo/vector-icons'
-import NovaPergunta from './NovaPergunta'
+import { Feather } from '@expo/vector-icons'
 import { NavigationActions } from 'react-navigation'
 import { submitBaralho, removeBaralho } from '../utils/api.js'
 import { removePergunta } from '../actions'
 import { connect } from 'react-redux'
 
-export class DetalheBaralho extends React.Component {
+class DetalheBaralho extends React.Component {
 
-
-  state = {
-    baralho: {}
-  }
-
-  deleteBaralho = (pergunta) => {
+  deletePergunta = (pergunta) => {
     const { baralho } = this.props;
     const key = baralho.key
 
@@ -46,7 +39,7 @@ export class DetalheBaralho extends React.Component {
                     </View>
                   }
                   right={
-                    <Button danger onPress={() => this.deleteBaralho(x)}>
+                    <Button danger onPress={() => this.deletePergunta(x)}>
                       <Icon active name="trash" />
                     </Button>
                   }
@@ -69,7 +62,8 @@ export class DetalheBaralho extends React.Component {
             )} name={'plus-circle'} size={40} style={{color: 'orange'}} />
             <Button
               iconLeft
-              onPress={() => this.props.navigation.navigate(
+              onPress={() => 
+                this.props.navigation.navigate(
                 'ModalidadeQuiz',
                 { perguntas: baralho.perguntas }
               )}

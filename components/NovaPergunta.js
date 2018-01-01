@@ -1,7 +1,6 @@
 import React from "react";
-import { Text, KeyboardAvoidingView, StyleSheet } from 'react-native'
+import { Text, KeyboardAvoidingView, StyleSheet, View } from 'react-native'
 import { Container, Content, Form, Item, Input, Label, Button } from 'native-base';
-import { white } from '../utils/colors.js'
 import { Guid } from '../utils/helpers.js'
 import { submitBaralho, removeBaralho } from '../utils/api.js'
 import { addBaralho, addPergunta } from '../actions'
@@ -23,7 +22,7 @@ class NovaPergunta extends React.Component {
 
     const key = Guid();
     const { pergunta, resposta, opcao2, opcao3, opcao4 } = this.state;
-    const { baralho } =  this.props.navigation.state.params;
+    const { baralho } = this.props.navigation.state.params;
     const { baralhos } = this.props;
 
     const novaPergunta = {
@@ -34,7 +33,7 @@ class NovaPergunta extends React.Component {
       opcao4
     }
 
-    this.props.dispatch(addPergunta(novaPergunta,baralho))
+    this.props.dispatch(addPergunta(novaPergunta, baralho))
 
     this.toHome();
 
@@ -55,11 +54,11 @@ class NovaPergunta extends React.Component {
 
   render() {
     const { pergunta, resposta, opcao2, opcao3, opcao4 } = this.state;
-    const habilitarBotao = 
-      pergunta !== '' && 
-      resposta !== '' && 
-      opcao2 !== '' && 
-      opcao3 !== '' && 
+    const habilitarBotao =
+      pergunta !== '' &&
+      resposta !== '' &&
+      opcao2 !== '' &&
+      opcao3 !== '' &&
       opcao4 !== '';
     return (
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
@@ -97,12 +96,16 @@ class NovaPergunta extends React.Component {
                   value={opcao4} />
               </Item>
             </Form>
-            <Button 
-              block 
-              style={{ marginTop: 20 }} onPress={() => this.submit()}
-              disabled={ habilitarBotao }>
-              <Text style={{ color: white }}>Salvar</Text>
-            </Button>
+            <View
+              style={styles.containerBtn}>
+              <Button
+                iconLeft
+                onPress={() => this.submit()}
+                style={[styles.btnStyle, { backgroundColor: habilitarBotao ? 'orange' : 'gray' }]}
+                disabled={!habilitarBotao}>
+                <Text style={{ color: 'white' }}>Adicionar Pergunta</Text>
+              </Button>
+            </View>
           </Content>
         </Container>
       </KeyboardAvoidingView>
@@ -123,6 +126,22 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding: 10
   },
+  containerBtn: {
+    flexDirection: "row",
+    flex: 1,
+    position: "relative",
+    top: 25,
+    marginBottom: 20,
+    left: 0,
+    right: 0,
+    justifyContent: 'space-between',
+    padding: 15
+  },
+  btnStyle: {
+    paddingLeft: 10,
+    paddingRight: 10,
+    backgroundColor: 'orange',
+  }
 })
 
 

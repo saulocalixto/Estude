@@ -2,15 +2,14 @@ import { ADD_PERGUNTA, ADD_BARALHO, RECEBE_BARALHOS, REMOVE_BARALHO, REMOVE_PERG
 
 export const initialStateBaralhos = {
     baralhos: {},
-    detalheBaralho: {},
-    perguntas: []
+    detalheBaralho: {}
 }
 
 const baralho = (state = initialStateBaralhos, action) => {
     let baralhos;
     switch (action.type) {
         case ADD_PERGUNTA:
-            const baralho = action.baralho;    
+            const baralho = action.baralho;
             baralho.perguntas.push(action.pergunta);
             baralhos = state.baralhos;
             baralhos[baralho.key] = baralho;
@@ -33,7 +32,7 @@ const baralho = (state = initialStateBaralhos, action) => {
             const baralhoDetalhado = baralhos[action.chave]
             return {
                 ...state,
-                baralho : baralhoDetalhado
+                baralho: baralhoDetalhado
             }
         case RECEBE_BARALHOS:
             baralhos = state.baralhos

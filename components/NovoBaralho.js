@@ -1,5 +1,5 @@
 import React from "react";
-import {Text} from 'react-native'
+import { Text, StyleSheet, View } from 'react-native'
 import { Container, Content, Form, Item, Input, Label, Button } from 'native-base';
 import { white } from '../utils/colors.js'
 import { Guid } from '../utils/helpers.js'
@@ -10,17 +10,16 @@ import { NavigationActions } from 'react-navigation'
 import ListaBaralho from './ListaBaralho'
 
 class NovoBaralho extends React.Component {
-  
-    state = {
-      titulo: '',
-      descricao: ''
-    }
+
+  state = {
+    titulo: '',
+    descricao: ''
+  }
 
   submit = () => {
 
     const key = Guid();
-    const {titulo, descricao} = this.state;
-    const { baralhos } = this.props;
+    const { titulo, descricao } = this.state;
 
     const baralho = {
       titulo,
@@ -31,11 +30,11 @@ class NovoBaralho extends React.Component {
 
     this.props.dispatch(addBaralho({
       [key]: baralho
-    }, baralhos))
+    }))
 
     this.toHome();
 
-    this.setState({titulo : '', descricao: ''});
+    this.setState({ titulo: '', descricao: '' });
     submitBaralho({ baralho })
   }
 
@@ -43,39 +42,60 @@ class NovoBaralho extends React.Component {
     this.props.navigation.dispatch(NavigationActions.back())
   }
 
-    render() {
-      return (
-        <Container style={{padding: 10, backgroundColor:'white'}}>
+  render() {
+    const { titulo, descricao } = this.state;
+    const habilitarBotao = titulo !== '' && descricao !== '';
+    return (
+      <Container style={{ padding: 10, backgroundColor: 'white' }}>
         <Content>
           <Form>
             <Item floatingLabel>
               <Label>Nome do Baralho</Label>
-              <Input 
-                onChangeText={(titulo) => {this.setState({titulo}); }}
-                value={this.state.titulo}/>
+              <Input
+                onChangeText={(titulo) => { this.setState({ titulo }); }}
+                value={this.state.titulo} />
             </Item>
             <Item stackedLabel last>
               <Label>Descrição</Label>
-              <Input 
-                onChangeText={(descricao) => {this.setState({descricao}); }}
+              <Input
+                onChangeText={(descricao) => { this.setState({ descricao }); }}
                 value={this.state.descricao}
-                multiline/>
+                multiline />
             </Item>
           </Form>
-          <Button block style={{ marginTop: 20 }} onPress={() => this.submit()}>
-            <Text style={{ color: white }}>Salvar</Text>
-          </Button>
+          <View
+            style={styles.containerBtn}>
+            <Button
+              iconLeft
+              onPress={() => this.submit()}
+              style={[styles.btnStyle, { backgroundColor: habilitarBotao ? 'orange' : 'gray' }]}
+              disabled={!habilitarBotao}>
+              <Text style={{ color: 'white' }}>Adicionar Baralho</Text>
+            </Button>
+          </View>
         </Content>
       </Container>
-      );
-    }
+    );
   }
+}
 
-  function mapStateToProps(store) {
-    const baralhos = store["baralhos"]
-    return {
-      baralhos: baralhos
-    }
+const styles = StyleSheet.create({
+  containerBtn: {
+    flexDirection: "row",
+    flex: 1,
+    position: "relative",
+    top: 25,
+    marginBottom: 20,
+    left: 0,
+    right: 0,
+    justifyContent: 'space-between',
+    padding: 15
+  },
+  btnStyle: {
+    paddingLeft: 10,
+    paddingRight: 10,
+    backgroundColor: 'orange',
   }
-  
-export default connect(mapStateToProps)(NovoBaralho)
+})
+
+export default connect()(NovoBaralho)
