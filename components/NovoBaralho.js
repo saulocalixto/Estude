@@ -20,6 +20,7 @@ class NovoBaralho extends React.Component {
 
     const key = Guid();
     const { titulo, descricao } = this.state;
+    const { setaBaralho } = this.props.navigation.state.params;
 
     const baralho = {
       titulo,
@@ -32,9 +33,8 @@ class NovoBaralho extends React.Component {
       [key]: baralho
     }))
 
-    this.toHome();
-
     this.setState({ titulo: '', descricao: '' });
+    setaBaralho(key);
     submitBaralho({ baralho })
   }
 

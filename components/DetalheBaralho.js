@@ -1,11 +1,12 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { Button, Card, CardItem, Icon, Right, Body, Container, Content, SwipeRow } from 'native-base';
 import { Feather } from '@expo/vector-icons'
 import { NavigationActions } from 'react-navigation'
 import { submitBaralho, removeBaralho } from '../utils/api.js'
 import { removePergunta } from '../actions'
 import { connect } from 'react-redux'
+import { MaterialIcons } from '@expo/vector-icons'
 
 class DetalheBaralho extends React.Component {
 
@@ -34,8 +35,9 @@ class DetalheBaralho extends React.Component {
                   leftOpenValue={0}
                   rightOpenValue={-75}
                   body={
-                    <View>
+                    <View style={styles.posicaoItemsLinha}>
                       <Text style={{ color: '#FE6D38' }}>{x.pergunta}</Text>
+                      <MaterialIcons name='keyboard-arrow-left' size={25} style={{ color: '#FE6D38' }} />
                     </View>
                   }
                   right={
@@ -50,7 +52,7 @@ class DetalheBaralho extends React.Component {
             ) : (
                 <Card>
                   <CardItem header>
-                    <Text style={{ textAlign: 'center', fontSize: 20 }}>Cadastre perguntas!</Text>
+                    <Text style={{ textAlign: 'center', fontSize: 20, color: '#FE6D38' }}>Cadastre perguntas!</Text>
                   </CardItem>
                 </Card>
               )
@@ -77,6 +79,15 @@ class DetalheBaralho extends React.Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  posicaoItemsLinha: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'space-between'
+  },
+})
 
 function mapStateToProps(store) {
   const baralhos = store["baralhos"]

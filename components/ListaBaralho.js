@@ -18,9 +18,13 @@ class ListaBaralho extends React.Component {
 
   setaBaralho = (chave) => {
 
-    this.props.navigation.navigate(
-      'DetalheBaralho'
-    )
+    this.props.navigation.dispatch(NavigationActions.reset({
+      index: 1,
+      actions: [
+        NavigationActions.navigate({ routeName: 'Home' }),
+        NavigationActions.navigate({ routeName: 'DetalheBaralho' }),
+      ]
+    }))
 
     this.props.detalhesBaralho(chave)
   }
@@ -35,6 +39,18 @@ class ListaBaralho extends React.Component {
     return (
       <Container style={styles.container}>
         <Content>
+        <View
+            style={styles.containerBtn}>
+            <Button
+              iconLeft
+              onPress={() => this.props.navigation.navigate(
+                'NovoBaralho',
+                { setaBaralho: (chave) => this.setaBaralho(chave) }
+              )}
+              style={styles.btnStyle}>
+              <Text style={{ color: 'white' }}>Novo Baralho</Text>
+            </Button>
+          </View>
           {listaChaves.length !== 0 ? (
             listaChaves.map(chave => (
               <SwipeRow
@@ -46,10 +62,10 @@ class ListaBaralho extends React.Component {
                     style={styles.containerLinha}>
                     <View style={styles.posicaoItemsLinha}>
                       <View>
-                        <Text style={{ fontSize: 20, color: '#FFF', padding: 10 }}>{baralhos[chave].titulo}</Text>
-                        <Text style={{ color: '#FFF', paddingLeft: 10 }}>{baralhos[chave].perguntas.length} carta(s)</Text>
+                        <Text style={{ fontSize: 25, color: '#D08401', padding: 10 }}>{baralhos[chave].titulo}</Text>
+                        <Text style={{ color: '#FEB638', paddingLeft: 10 }}>{baralhos[chave].perguntas.length} carta(s)</Text>
                       </View>
-                      <MaterialIcons name='keyboard-arrow-left' size={25} style={{ color: '#CD5A17' }} />
+                      <MaterialIcons name='keyboard-arrow-left' size={25} style={{ color: '#FEB638' }} />
                     </View>
                   </TouchableOpacity>
                 }
@@ -66,22 +82,11 @@ class ListaBaralho extends React.Component {
             (
               <Card>
                 <CardItem header>
-                  <Text style={styles.center}>Sem baralhos cadastrados!</Text>
+                  <Text style={{ textAlign: 'center', fontSize: 20, color: '#FE6D38' }}>Sem baralhos cadastrados!</Text>
                 </CardItem>
               </Card>
             )
           }
-          <View
-            style={styles.containerBtn}>
-            <Button
-              iconLeft
-              onPress={() => this.props.navigation.navigate(
-                'NovoBaralho'
-              )}
-              style={styles.btnStyle}>
-              <Text style={{ color: 'white' }}>Novo Baralho</Text>
-            </Button>
-          </View>
         </Content>
       </Container>
     );
@@ -95,8 +100,6 @@ const styles = StyleSheet.create({
   },
   containerLinha: {
     flex: 1,
-    borderRadius: 5,
-    backgroundColor: '#FE6D38',
     width: '100%',
     height: '100%'
   },
@@ -110,11 +113,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flex: 1,
     position: "relative",
-    top: 25,
-    marginBottom: 30,
+    marginBottom: 5,
     left: 0,
     right: 0,
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
   },
   btnStyle: {
     paddingLeft: 10,

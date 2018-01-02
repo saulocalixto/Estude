@@ -3,6 +3,7 @@ import { Text, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Button } from 'native-base';
 import { NavigationActions } from 'react-navigation'
 import { clearLocalNotification, setLocalNotification } from '../../utils/helpers'
+import ResultadoQuiz from './ResultadoQuiz.js'
 
 export default class FlashCard extends Component {
 
@@ -38,8 +39,8 @@ export default class FlashCard extends Component {
               </Text>
               {mostrarResposta ? (
                 <View style={{ flexDirection: "row", justifyContent: 'space-between', alignItems: 'flex-end', padding: 15 }}>
-                  <Button 
-                    iconRight 
+                  <Button
+                    iconRight
                     style={{ paddingLeft: 10, paddingRight: 10 }}
                     onPress={() => this.setState({
                       indice: indice + 1,
@@ -49,11 +50,11 @@ export default class FlashCard extends Component {
                     transparent light>
                     <Text style={{ fontSize: 20, color: '#dbd7b7' }}>Acertei!</Text>
                   </Button>
-                  <Button iconLeft 
+                  <Button iconLeft
                     onPress={() => this.setState({
                       indice: indice + 1,
                       mostrarResposta: false
-                    })} 
+                    })}
                     style={{ paddingLeft: 10, paddingRight: 10 }}
                     transparent light>
                     <Text style={{ fontSize: 20, color: '#dbd7b7' }}>Errei!</Text>
@@ -72,30 +73,13 @@ export default class FlashCard extends Component {
             </View>
           </TouchableOpacity>
         ) : (
-            <View style={styles.cardStyle}>
-              <Text style={styles.BtnText}>
-                {`Você acertou ${pontuacao} de um total de ${perguntas.length} pergunta(s)`}
-              </Text>
-              <View style={styles.containerBtn}>
-                <Button
-                  iconRight
-                  style={styles.styleBtn}
-                  onPress={() => this.props.navigation.dispatch(NavigationActions.reset({
-                    index: 1,
-                    actions: [
-                      NavigationActions.navigate({ routeName: 'Home' }),
-                      NavigationActions.navigate({ routeName: 'DetalheBaralho' }),
-                    ]
-                  }))}>
-                  <Text style={{ color: 'white' }}>Voltar ao baralho</Text>
-                </Button>
-                <Button
-                  iconLeft
-                  onPress={() => this.setState({ indice: 0, pontuacao: 0 })}
-                  style={styles.styleBtn}>
-                  <Text style={{ color: 'white' }}>Reiniciar Quiz</Text>
-                </Button>
-              </View>
+            <View style={[styles.cardStyle, {height: '50%'}]}>
+              <ResultadoQuiz
+                pontuacao={pontuacao}
+                indice={indice}
+                resetaQuiz={() => this.setState({ indice: 0, pontuacao: 0 })}
+                navigation={this.props.navigation}
+                BtnText={styles.BtnText} />
             </View>
           )}
       </View>

@@ -16,6 +16,7 @@ import {
 } from 'native-base';
 import { NavigationActions } from 'react-navigation'
 import { clearLocalNotification, setLocalNotification } from '../../utils/helpers'
+import ResultadoQuiz from './ResultadoQuiz.js'
 
 class MultiploQuiz extends Component {
 
@@ -145,34 +146,11 @@ class MultiploQuiz extends Component {
                   </View>
                 </View>
               ) : (
-                <View>
-                  <CardItem>
-                    <Body>
-                      <Text>{`Você acertou ${pontuacao} de um total de ${indice} pergunta(s)`}</Text>
-                    </Body>
-                  </CardItem>
-                  <View
-                    style={styles.containerBtn}>
-                    <Button
-                      iconRight
-                      style={styles.btnStyle}
-                      onPress={() => this.props.navigation.dispatch(NavigationActions.reset({
-                        index: 1,
-                        actions: [
-                          NavigationActions.navigate({ routeName: 'Home' }),
-                          NavigationActions.navigate({ routeName: 'DetalheBaralho' }),
-                        ]
-                      }))}>
-                      <Text style={{ color: 'white' }}>Voltar ao baralho</Text>
-                    </Button>
-                    <Button
-                      iconLeft
-                      onPress={() => this.setState({ indice: 0, pontuacao: 0 })}
-                      style={styles.btnStyle}>
-                      <Text style={{ color: 'white' }}>Reiniciar Quiz</Text>
-                    </Button>
-                  </View>
-                </View>
+                <ResultadoQuiz
+                  pontuacao={pontuacao}
+                  indice={indice} 
+                  resetaQuiz={ () => this.setState({ indice: 0, pontuacao: 0 }) }
+                  navigation={ this.props.navigation }/>
               )
             }
           </Card>
