@@ -1,7 +1,6 @@
 import React from "react";
 import { Text, StyleSheet, View } from 'react-native'
 import { Container, Content, Form, Item, Input, Label, Button } from 'native-base';
-import { white } from '../utils/colors.js'
 import { Guid } from '../utils/helpers.js'
 import { submitBaralho, removeBaralho } from '../utils/api.js'
 import { addBaralho } from '../actions'
