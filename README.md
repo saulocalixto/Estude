@@ -5,7 +5,7 @@ um baralho que representa um grupo de perguntas de determinado assunto, e dentro
 poderá cadastrar "cartas", as quais representam as perguntas que o usuário poderá responder.
 Há duas modalidade de quiz: *Múltipla Escolha* e *Flash Cards*.
 
-**Esse aplicativo foi testado *dispositivos Android e IOS*.**
+**Esse aplicativo foi testado em *dispositivos Android e IOS*.**
 Caso ocorra algum erro ao executar o projeto tente resetar cache:
 
 `npm start -- --reset-cache`
