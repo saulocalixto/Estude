@@ -35,7 +35,7 @@ class MultiploQuiz extends Component {
   ]
 
   componentWillMount() {
-    this.chavePerguntas = Shuffle(this.chavePerguntas)
+    this._embaralhaOpcoes();
   }
 
   componentDidUpdate() {
@@ -54,9 +54,7 @@ class MultiploQuiz extends Component {
 
     this.setState({ indice: indice + 1 })
 
-    if (indice < perguntas.length) {
-      this.chavePerguntas = Shuffle(this.chavePerguntas)
-    }
+    this._embaralhaOpcoes();
 
     const novoEstado = this._mudaStatus(this.chavePerguntas, perguntasSelecionadas);
 
@@ -74,6 +72,17 @@ class MultiploQuiz extends Component {
       estado[x].textColor = '#FE6D38'
     })
     return estado;
+  }
+
+  _embaralhaOpcoes() {
+    const { perguntas } = this.props.navigation.state.params;
+    const { indice } = this.state;
+
+    if (indice < perguntas.length) {
+      this.chavePerguntas = Shuffle(this.chavePerguntas)
+    }
+
+    return this.chavePerguntas;
   }
 
   Marcar = (chave) => {
@@ -161,14 +170,6 @@ class MultiploQuiz extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingLeft: 15,
-    paddingRight: 15,
-    backgroundColor: 'white',
-    flexDirection: 'column',
-    justifyContent: 'center'
-  },
   questionario: {
     flexDirection: 'row',
     justifyContent: 'space-between',

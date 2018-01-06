@@ -35,59 +35,6 @@ export let EstadoPergunta = {
   }
 }
 
-export const MainNavigator = StackNavigator({
-  Home: {
-    screen: ListaBaralho,
-    navigationOptions: {
-      title: 'Baralhos',
-    }
-  },
-  NovoBaralho: {
-    screen: NovoBaralho,
-    navigationOptions: {
-      title: 'Novo Baralho',
-    }
-  },
-  DetalheBaralho: {
-    screen: DetalheBaralho,
-    navigationOptions: {
-      title: 'Detalhes',
-    }
-  },
-  NovaPergunta: {
-    screen: NovaPergunta,
-    navigationOptions: {
-      title: 'Nova Pergunta',
-    },
-  },
-  ModalidadeQuiz: {
-    screen: ModalidadeQuiz,
-    navigationOptions: {
-      title: 'Quiz',
-    },
-  },
-  MultiploQuiz: {
-    screen: MultiploQuiz,
-    navigationOptions: {
-      title: 'Múltipla Escolha',
-    },
-  },
-  FlashCard: {
-    screen: FlashCard,
-    navigationOptions: {
-      title: 'Flash Card',
-    },
-  }
-}, 
-{
-  navigationOptions: {
-    headerTintColor: 'white',
-    headerStyle: {
-      backgroundColor: '#ED7733',
-    }
-  },
-})
-
 export const Guid = () => {
   function s4() {
     return Math.floor((1 + Math.random()) * 0x10000)
