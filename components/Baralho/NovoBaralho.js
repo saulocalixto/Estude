@@ -1,12 +1,11 @@
 import React from "react";
 import { Text, StyleSheet, View } from 'react-native'
 import { Container, Content, Form, Item, Input, Label, Button } from 'native-base';
-import { Guid } from '../utils/helpers.js'
-import { submitBaralho, removeBaralho } from '../utils/api.js'
-import { addBaralho } from '../actions'
+import { Guid } from '../../utils/helpers.js'
+import { submitBaralho, removeBaralho } from '../../utils/api.js'
+import { addBaralho } from '../../actions'
 import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
-import ListaBaralho from './ListaBaralho'
 
 class NovoBaralho extends React.Component {
 

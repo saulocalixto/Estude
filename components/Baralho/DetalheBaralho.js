@@ -3,8 +3,8 @@ import { View, Text, StyleSheet } from "react-native";
 import { Button, Card, CardItem, Icon, Right, Body, Container, Content, SwipeRow } from 'native-base';
 import { Feather } from '@expo/vector-icons'
 import { NavigationActions } from 'react-navigation'
-import { submitBaralho, removeBaralho } from '../utils/api.js'
-import { removePergunta } from '../actions'
+import { submitBaralho, removeBaralho } from '../../utils/api.js'
+import { removePergunta } from '../../actions'
 import { connect } from 'react-redux'
 import { MaterialIcons } from '@expo/vector-icons'
 
@@ -52,12 +52,15 @@ class DetalheBaralho extends React.Component {
             ) : (
                 <Card>
                   <CardItem header>
-                    <Text style={{ textAlign: 'center', fontSize: 20, color: '#FE6D38' }}>Cadastre perguntas!</Text>
+                    <Text style={{ textAlign: 'center', fontSize: 20, color: '#FE6D38' }}>
+                      Cadastre perguntas!
+                    </Text>
                   </CardItem>
                 </Card>
               )
           }
-          <View style={{ flexDirection: "row", flex: 1, position: "relative", top: 25, marginBottom: 20, left: 0, right: 0, justifyContent: 'space-between', padding: 15 }}>
+          <View 
+            style={ styles.containerBotoes }>
           <Feather onPress={() => this.props.navigation.navigate(
               'NovaPergunta',
               { baralho: baralho, tituloBaralho: baralho.titulo }
@@ -80,6 +83,16 @@ class DetalheBaralho extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  containerBotoes: { 
+    flexDirection: "row", 
+    flex: 1, 
+    position: "relative", 
+    top: 25, 
+    marginBottom: 20, 
+    left: 0, right: 0, 
+    justifyContent: 'space-between', 
+    padding: 15 
+  },
   posicaoItemsLinha: {
     flexDirection: 'row',
     alignItems: 'center',
