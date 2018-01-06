@@ -5,6 +5,7 @@ import { NavigationActions } from 'react-navigation'
 import { clearLocalNotification, setLocalNotification } from '../../utils/helpers'
 import ResultadoQuiz from './ResultadoQuiz.js'
 import { connect } from 'react-redux'
+import BotoesAcertoErro from './BotoesAcertoErro.js'
 
 class FlashCard extends Component {
 
@@ -39,28 +40,20 @@ class FlashCard extends Component {
                 {mostrarResposta ? pergunta.resposta : pergunta.pergunta}
               </Text>
               {mostrarResposta ? (
-                <View style={{ flexDirection: "row", justifyContent: 'space-between', alignItems: 'flex-end', padding: 15 }}>
-                  <Button
-                    iconRight
-                    style={{ paddingLeft: 10, paddingRight: 10 }}
-                    onPress={() => this.setState({
+                <BotoesAcertoErro
+                  marcarAcerto={() => {
+                    this.setState({
                       indice: indice + 1,
                       pontuacao: pontuacao + 1,
                       mostrarResposta: false
-                    })}
-                    transparent light>
-                    <Text style={{ fontSize: 20, color: '#dbd7b7' }}>Acertei!</Text>
-                  </Button>
-                  <Button iconLeft
-                    onPress={() => this.setState({
+                    })
+                  }}
+                  marcarErro={() => {
+                    this.setState({
                       indice: indice + 1,
                       mostrarResposta: false
-                    })}
-                    style={{ paddingLeft: 10, paddingRight: 10 }}
-                    transparent light>
-                    <Text style={{ fontSize: 20, color: '#dbd7b7' }}>Errei!</Text>
-                  </Button>
-                </View>
+                    })
+                  }} />
               ) : (
                   <View>
                     <Text style={{ color: 'white', textAlign: 'center' }}>
@@ -74,7 +67,7 @@ class FlashCard extends Component {
             </View>
           </TouchableOpacity>
         ) : (
-            <View style={[styles.cardStyle, {height: '50%'}]}>
+            <View style={[styles.cardStyle, { height: '50%' }]}>
               <ResultadoQuiz
                 pontuacao={pontuacao}
                 indice={indice}

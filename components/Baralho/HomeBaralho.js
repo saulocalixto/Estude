@@ -6,6 +6,7 @@ import { NavigationActions } from 'react-navigation'
 import { fetchPegarBaralhos, fetchRemoveBaralho, pegaDetalhes } from '../../actions'
 import { Feather } from '@expo/vector-icons'
 import ListarBaralhos from './ListarBaralhos.js'
+import ListaVazia from './ListaVazia.js'
 
 class HomeBaralho extends React.Component {
 
@@ -51,13 +52,8 @@ class HomeBaralho extends React.Component {
           )
             :
             (
-              <Card>
-                <CardItem header>
-                  <Text style={{ textAlign: 'center', fontSize: 20, color: '#FE6D38' }}>
-                    Sem baralhos cadastrados!
-                  </Text>
-                </CardItem>
-              </Card>
+              <ListaVazia 
+                mensagem={ 'Sem baralhos cadastrados!' }/>
             )
           }
         </Content>

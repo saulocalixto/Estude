@@ -4,7 +4,7 @@ const CHAVE = 'saulo:baralho'
 
 export const fetchBaralhoResults = () => {
     return AsyncStorage.getItem(CHAVE)
-      .then([])
+      .then()
   }
 
 export const submitBaralho = ({ baralho }) => {

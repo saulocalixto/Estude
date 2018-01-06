@@ -26,7 +26,9 @@ const ListarBaralhos = (props) => {
                       {baralhos[chave].perguntas.length} carta(s)
                   </Text>
                   </View>
-                  <MaterialIcons name='keyboard-arrow-left' size={25} style={{ color: '#FEB638' }} />
+                  <MaterialIcons 
+                    name='keyboard-arrow-left' size={25} 
+                    style={{ color: '#FEB638' }} />
                 </View>
               </TouchableOpacity>
             }

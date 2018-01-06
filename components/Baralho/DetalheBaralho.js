@@ -7,6 +7,7 @@ import { submitBaralho, removeBaralho } from '../../utils/api.js'
 import { removePergunta } from '../../actions'
 import { connect } from 'react-redux'
 import { MaterialIcons } from '@expo/vector-icons'
+import ListaVazia from './ListaVazia.js'
 
 class DetalheBaralho extends React.Component {
 
@@ -50,13 +51,8 @@ class DetalheBaralho extends React.Component {
                 />
               ))
             ) : (
-                <Card>
-                  <CardItem header>
-                    <Text style={{ textAlign: 'center', fontSize: 20, color: '#FE6D38' }}>
-                      Cadastre perguntas!
-                    </Text>
-                  </CardItem>
-                </Card>
+                <ListaVazia 
+                mensagem={ 'Cadastre perguntas!' }/>
               )
           }
           <View 
