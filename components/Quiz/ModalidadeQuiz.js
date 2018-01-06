@@ -4,12 +4,10 @@ import { NavigationActions } from 'react-navigation'
 
 export default class ModalidadeQuiz extends Component {
   render() {
-    const { perguntas } = this.props.navigation.state.params;
     return (
       <View style={styles.container}>
         <TouchableOpacity onPress={() => this.props.navigation.navigate(
-          'FlashCard',
-          { perguntas }
+          'FlashCard'
         )} >
           <View style={styles.cardStyle}>
             <Text style={styles.BtnText}>
@@ -18,8 +16,7 @@ export default class ModalidadeQuiz extends Component {
           </View>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => this.props.navigation.navigate(
-          'MultiploQuiz',
-          { perguntas }
+          'MultiploQuiz'
         )}>
           <View style={styles.cardStyle}>
             <Text style={styles.BtnText}>

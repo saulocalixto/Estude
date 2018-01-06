@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { Button } from 'native-base';
 
 const BotoesControle = (props) => {
-  const { responder, desabilitarBotao, verResposta, perguntasSelecionadas, indice, perguntas } = props
+  const { responder, desabilitarBotao, verResposta, EhUltimaPergunta } = props
   return (
     <View style={styles.containerBtn}>
       <Button iconRight
@@ -17,7 +17,7 @@ const BotoesControle = (props) => {
         style={[styles.btnStyle, { backgroundColor: !desabilitarBotao ? 'orange' : 'gray' }]}>
         <Text
           style={{ paddingLeft: 10, paddingRight: 10, color: 'white' }}>
-          {indice === perguntas.length - 1
+          { EhUltimaPergunta
             ? 'Resultado'
             : 'Próxima Pergunta'
           }

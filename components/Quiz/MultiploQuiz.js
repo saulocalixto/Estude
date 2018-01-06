@@ -40,7 +40,7 @@ class MultiploQuiz extends Component {
   }
 
   componentDidUpdate() {
-    const { perguntas } = this.props.navigation.state.params;
+    const { perguntas } = this.props;
     if (this.state.indice === perguntas.length) {
       clearLocalNotification()
         .then(setLocalNotification)
@@ -49,7 +49,7 @@ class MultiploQuiz extends Component {
 
   responder = () => {
 
-    const { perguntas } = this.props.navigation.state.params;
+    const { perguntas } = this.props;
     const { indice, perguntasSelecionadas } = this.state;
     const qtdPerguntas = perguntas.length;
 
@@ -76,7 +76,7 @@ class MultiploQuiz extends Component {
   }
 
   _embaralhaOpcoes() {
-    const { perguntas } = this.props.navigation.state.params;
+    const { perguntas } = this.props;
     const { indice } = this.state;
 
     if (indice < perguntas.length) {
@@ -107,7 +107,7 @@ class MultiploQuiz extends Component {
   }
 
   render() {
-    const { perguntas } = this.props.navigation.state.params;
+    const { perguntas } = this.props;
     const { indice, perguntasSelecionadas, desabilitarBotao, pontuacao } = this.state;
     const qtdPerguntas = perguntas.length;
     const pergunta = perguntas[indice < qtdPerguntas ? indice : qtdPerguntas - 1];
@@ -140,15 +140,13 @@ class MultiploQuiz extends Component {
                       </TouchableOpacity>
                     ))}
                   <BotoesControle
-                    perguntasSelecionadas={perguntasSelecionadas}
                     verResposta={() => {
                       perguntasSelecionadas['resposta'].textColor = 'green';
                       this.setState({ perguntasSelecionadas })
                     }}
-                    desabilitarBotao={desabilitarBotao}
-                    responder={() => this.responder()}
-                    indice={indice}
-                    perguntas={perguntas} />
+                    desabilitarBotao={ desabilitarBotao }
+                    responder={ () => this.responder() }
+                    EhUltimaPergunta={indice === perguntas.length - 1} />
                 </View>
               ) : (
                 <ResultadoQuiz
@@ -173,4 +171,11 @@ const styles = StyleSheet.create({
   }
 })
 
-export default connect()(MultiploQuiz)
+function mapStateToProps(store) {
+  const perguntas = store["baralho"].perguntas
+  return {
+    perguntas
+  }
+}
+
+export default connect(mapStateToProps)(MultiploQuiz)

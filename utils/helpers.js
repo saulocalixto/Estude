@@ -1,14 +1,6 @@
 import React from 'react'
 import { AsyncStorage } from 'react-native'
 import { Notifications, Permissions } from 'expo'
-import MultiploQuiz from '../components/Quiz/MultiploQuiz.js'
-import FlashCard from '../components/Quiz/FlashCard.js'
-import ModalidadeQuiz from '../components/Quiz/ModalidadeQuiz.js'
-import DetalheBaralho from '../components/DetalheBaralho.js'
-import NovaPergunta from '../components/NovaPergunta.js'
-import ListaBaralho from '../components/ListaBaralho.js'
-import NovoBaralho from '../components/NovoBaralho.js'
-import { StackNavigator } from 'react-navigation'
 
 const NOTIFICATION_KEY = 'saulo:notificacao'
 

@@ -4,8 +4,9 @@ import { Button } from 'native-base';
 import { NavigationActions } from 'react-navigation'
 import { clearLocalNotification, setLocalNotification } from '../../utils/helpers'
 import ResultadoQuiz from './ResultadoQuiz.js'
+import { connect } from 'react-redux'
 
-export default class FlashCard extends Component {
+class FlashCard extends Component {
 
   state = {
     indice: 0,
@@ -15,7 +16,7 @@ export default class FlashCard extends Component {
   }
 
   componentDidUpdate() {
-    const { perguntas } = this.props.navigation.state.params;
+    const { perguntas } = this.props;
     if (this.state.indice === perguntas.length) {
       clearLocalNotification()
         .then(setLocalNotification)
@@ -23,7 +24,7 @@ export default class FlashCard extends Component {
   }
 
   render() {
-    const { perguntas } = this.props.navigation.state.params;
+    const { perguntas } = this.props;
     const { indice, perguntasSelecionadas, desabilitarBotao, pontuacao, mostrarResposta } = this.state;
     const qtdPerguntas = perguntas.length;
     const pergunta = perguntas[indice < qtdPerguntas ? indice : qtdPerguntas - 1];
@@ -121,3 +122,12 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
 })
+
+function mapStateToProps(store) {
+  const perguntas = store["baralho"].perguntas
+  return {
+    perguntas
+  }
+}
+
+export default connect(mapStateToProps)(FlashCard)

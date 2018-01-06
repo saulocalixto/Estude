@@ -67,7 +67,6 @@ class DetalheBaralho extends React.Component {
               onPress={() => 
                 this.props.navigation.navigate(
                 'ModalidadeQuiz',
-                { perguntas: baralho.perguntas }
               )}
               style={{ paddingLeft: 10, paddingRight: 10, backgroundColor: temPerguntas ? 'orange' : 'gray' }}
               disabled={!temPerguntas}>
@@ -90,11 +89,11 @@ const styles = StyleSheet.create({
 })
 
 function mapStateToProps(store) {
-  const baralhos = store["baralhos"]
   const baralho = store["baralho"]
+  const baralhos = store["baralhos"]
   return {
-    baralhos: baralhos,
-    baralho
+    baralho,
+    baralhos
   }
 }
 
