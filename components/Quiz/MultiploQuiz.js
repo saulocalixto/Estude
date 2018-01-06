@@ -3,6 +3,10 @@ import { Image, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { connect } from 'react-redux'
 import { Shuffle, EstadoPergunta } from '../../utils/helpers'
 import CabecalhoQuiz from './CabecalhoQuiz.js'
+import { NavigationActions } from 'react-navigation'
+import { clearLocalNotification, setLocalNotification } from '../../utils/helpers'
+import ResultadoQuiz from './ResultadoQuiz.js'
+import BotoesControle from './BotoesControle.js'
 import {
   Container,
   View,
@@ -14,9 +18,6 @@ import {
   Body,
   Button
 } from 'native-base';
-import { NavigationActions } from 'react-navigation'
-import { clearLocalNotification, setLocalNotification } from '../../utils/helpers'
-import ResultadoQuiz from './ResultadoQuiz.js'
 
 class MultiploQuiz extends Component {
 
@@ -85,6 +86,12 @@ class MultiploQuiz extends Component {
     return this.chavePerguntas;
   }
 
+  _mostraPerguntaCorreta() {
+    const { perguntasSelecionadas } = this.state;
+    perguntasSelecionadas['resposta'].textColor = 'green';
+    this.setState({ perguntasSelecionadas })
+  }
+
   Marcar = (chave) => {
     const { perguntasSelecionadas } = this.state;
     const novoEstado = perguntasSelecionadas;
@@ -121,7 +128,8 @@ class MultiploQuiz extends Component {
                   {
                     this.chavePerguntas.map(x => (
                       <TouchableOpacity
-                        onPress={() => this.Marcar(x)} key={x}
+                        onPress={() => this.Marcar(x)} 
+                        key={x}
                         style={styles.questionario}>
                         <Text style={{ color: perguntasSelecionadas[x].textColor, maxWidth: 300 }}>
                           {pergunta[x]}
@@ -131,35 +139,23 @@ class MultiploQuiz extends Component {
                         </Right>
                       </TouchableOpacity>
                     ))}
-                  <View style={styles.containerBtn}>
-                    <Button iconRight
-                      style={styles.btnStyle}
-                      onPress={() => {
-                        perguntasSelecionadas['resposta'].textColor = 'green';
-                        this.setState({ perguntasSelecionadas })
-                      }}>
-                      <Text style={{ color: 'white' }}>Resposta Correta</Text>
-                    </Button>
-                    <Button disabled={desabilitarBotao}
-                      iconLeft
-                      onPress={() => this.responder()}
-                      style={[styles.btnStyle, { backgroundColor: !desabilitarBotao ? 'orange' : 'gray' }]}>
-                      <Text
-                        style={{ paddingLeft: 10, paddingRight: 10, color: 'white' }}>
-                        {indice === perguntas.length - 1
-                          ? 'Resultado'
-                          : 'Próxima Pergunta'
-                        }
-                      </Text>
-                    </Button>
-                  </View>
+                  <BotoesControle
+                    perguntasSelecionadas={perguntasSelecionadas}
+                    verResposta={() => {
+                      perguntasSelecionadas['resposta'].textColor = 'green';
+                      this.setState({ perguntasSelecionadas })
+                    }}
+                    desabilitarBotao={desabilitarBotao}
+                    responder={() => this.responder()}
+                    indice={indice}
+                    perguntas={perguntas} />
                 </View>
               ) : (
                 <ResultadoQuiz
                   pontuacao={pontuacao}
-                  indice={indice} 
-                  resetaQuiz={ () => this.setState({ indice: 0, pontuacao: 0 }) }
-                  navigation={ this.props.navigation }/>
+                  indice={indice}
+                  resetaQuiz={() => this.setState({ indice: 0, pontuacao: 0 })}
+                  navigation={this.props.navigation} />
               )
             }
           </Card>
@@ -174,22 +170,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 10
-  },
-  containerBtn: {
-    flexDirection: "row",
-    flex: 1,
-    position: "relative",
-    top: 25,
-    marginBottom: 20,
-    left: 0,
-    right: 0,
-    justifyContent: 'space-between',
-    padding: 15
-  },
-  btnStyle: {
-    paddingLeft: 10,
-    paddingRight: 10,
-    backgroundColor: 'orange',
   }
 })
 
