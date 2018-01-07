@@ -27,6 +27,11 @@ ou
 
 `$ yarn start`
 
+Para simular o app você pode utilizar algum simulador para IOs ou Android ou seu próprio
+smartphone, através do app Expo que está disponível tanto para [Android](https://play.google.com/store/apps/details?id=host.exp.exponent&hl=pt_BR), como para 
+[Iphone](https://itunes.apple.com/us/app/expo-client/id982107779?mt=8). Após instalado
+o Expo é só ler qrcode gerado para poder testar o App.
+
 ### Requisitos do Projeto
 Os requisitos foram levantados pela Udacity e podem ser encontrados aqui: [Requisitos].
 
