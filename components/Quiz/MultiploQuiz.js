@@ -116,12 +116,14 @@ class MultiploQuiz extends Component {
     return (
       <Container style={{ backgroundColor: 'white' }}>
         <Content>
-          <Card style={{ elevation: 3 }}>
-            <CabecalhoQuiz
+          <Card>
+          <CabecalhoQuiz
               imagem={indice !== qtdPerguntas ? questionImg : exclamationImg}
               titulo={indice !== qtdPerguntas ? pergunta.pergunta : 'Resultado'}
               indice={indice}
               qtdPerguntas={qtdPerguntas} />
+            </Card>
+          <Card style={{ elevation: 3, padding: 10 }}>
             {indice !== qtdPerguntas ?
               (
                 <View>

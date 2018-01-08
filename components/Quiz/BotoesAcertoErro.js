@@ -1,24 +1,21 @@
 import React from 'react';
-import { Text, View } from 'react-native';
-import { Button } from 'native-base';
+import { Text, View, TouchableOpacity } from 'react-native';
+import { styleButton } from '../../themes'
 
 const BotoesAcertoErro = (props) => {
   const { marcarAcerto, marcarErro,  } = props
   return (
     <View style={{ flexDirection: "row", justifyContent: 'space-between', alignItems: 'flex-end', padding: 15 }}>
-      <Button
-        iconRight
-        style={{ paddingLeft: 10, paddingRight: 10 }}
-        onPress={marcarAcerto}
-        transparent light>
-        <Text style={{ fontSize: 20, color: '#dbd7b7' }}>Acertei!</Text>
-      </Button>
-      <Button iconLeft
+      <TouchableOpacity
+        style={styleButton.styleBtnAtive}
+        onPress={marcarAcerto}>
+        <Text style={ [styleButton.btnTextAtive, { fontSize: 20 }] }>Acertei!</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
         onPress={marcarErro}
-        style={{ paddingLeft: 10, paddingRight: 10 }}
-        transparent light>
-        <Text style={{ fontSize: 20, color: '#dbd7b7' }}>Errei!</Text>
-      </Button>
+        style={styleButton.styleBtnAtive}>
+        <Text style={ [styleButton.btnTextAtive, { fontSize: 20 }] }>Errei!</Text>
+      </TouchableOpacity>
     </View>
   )
 }

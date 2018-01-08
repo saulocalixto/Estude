@@ -1,11 +1,12 @@
 import React from "react";
-import { Text, KeyboardAvoidingView, StyleSheet, View } from 'react-native'
-import { Container, Content, Form, Item, Input, Label, Button } from 'native-base';
+import { Text, KeyboardAvoidingView, StyleSheet, View, TouchableOpacity } from 'react-native'
+import { Container, Content, Form, Item, Input, Label } from 'native-base';
 import { Guid } from '../../utils/helpers.js'
 import { submitBaralho, removeBaralho } from '../../utils/api.js'
 import { addBaralho, addPergunta } from '../../actions'
 import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
+import { styleButton } from '../../themes'
 
 class NovaPergunta extends React.Component {
 
@@ -96,15 +97,18 @@ class NovaPergunta extends React.Component {
               </Item>
             </Form>
             <View
-              style={styles.containerBtn}>
-              <Button
-                iconLeft
-                onPress={() => this.submit()}
-                style={[styles.btnStyle, { backgroundColor: habilitarBotao ? 'orange' : 'gray' }]}
-                disabled={!habilitarBotao}>
-                <Text style={{ color: 'white' }}>Adicionar Pergunta</Text>
-              </Button>
-            </View>
+            style={styleButton.containerBtn}>
+            <TouchableOpacity
+              onPress={() => this.submit()}
+              style={ habilitarBotao ? 
+                styleButton.styleBtnAtive : 
+                styleButton.styleBtnInative }
+              disabled={!habilitarBotao}>
+              <Text style={ habilitarBotao ? 
+                styleButton.btnTextAtive : 
+                styleButton.btnTextInative }>Adicionar Baralho</Text>
+            </TouchableOpacity>
+          </View>
           </Content>
         </Container>
       </KeyboardAvoidingView>
@@ -125,22 +129,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding: 10
   },
-  containerBtn: {
-    flexDirection: "row",
-    flex: 1,
-    position: "relative",
-    top: 25,
-    marginBottom: 20,
-    left: 0,
-    right: 0,
-    justifyContent: 'space-between',
-    padding: 15
-  },
-  btnStyle: {
-    paddingLeft: 10,
-    paddingRight: 10,
-    backgroundColor: 'orange',
-  }
 })
 
 

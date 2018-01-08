@@ -6,6 +6,7 @@ import { clearLocalNotification, setLocalNotification } from '../../utils/helper
 import ResultadoQuiz from './ResultadoQuiz.js'
 import { connect } from 'react-redux'
 import BotoesAcertoErro from './BotoesAcertoErro.js'
+import { styleCard } from '../../themes'
 
 class FlashCard extends Component {
 
@@ -35,7 +36,7 @@ class FlashCard extends Component {
       <View style={styles.container}>
         {indice !== qtdPerguntas ? (
           <TouchableOpacity onPress={() => this.setState({ mostrarResposta: !mostrarResposta })}>
-            <View style={styles.cardStyle}>
+            <View style={styleCard.cardStyle}>
               <Text style={styles.BtnText}>
                 {mostrarResposta ? pergunta.resposta : pergunta.pergunta}
               </Text>
@@ -56,10 +57,10 @@ class FlashCard extends Component {
                   }} />
               ) : (
                   <View>
-                    <Text style={{ color: 'white', textAlign: 'center' }}>
+                    <Text style={{ color: '#ff6600', textAlign: 'center' }}>
                       Pressione a carta para ver a resposta!
                     </Text>
-                    <Text style={{ color: 'white', textAlign: 'center' }}>
+                    <Text style={{ color: '#ff6600', textAlign: 'center' }}>
                       {`Pergunta ${indice + 1} de ${qtdPerguntas}`}
                     </Text>
                   </View>
@@ -67,7 +68,7 @@ class FlashCard extends Component {
             </View>
           </TouchableOpacity>
         ) : (
-            <View style={[styles.cardStyle, { height: '50%' }]}>
+            <View>
               <ResultadoQuiz
                 pontuacao={pontuacao}
                 indice={indice}
@@ -90,27 +91,13 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center'
   },
-  cardStyle: {
-    backgroundColor: '#FE6D38',
-    padding: 10,
-    borderRadius: 5,
-    height: '70%',
-    width: '100%',
-    flexDirection: 'column',
-    justifyContent: 'center',
-  },
   containerBtn: {
     flexDirection: "row",
     justifyContent: 'space-between',
     padding: 15
   },
-  styleBtn: {
-    paddingLeft: 10,
-    paddingRight: 10,
-    backgroundColor: 'orange'
-  },
   BtnText: {
-    color: 'white',
+    color: '#ff6600',
     fontSize: 30,
     textAlign: 'center'
   },

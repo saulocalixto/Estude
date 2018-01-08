@@ -1,49 +1,31 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { Button } from 'native-base';
+import { styleButton } from '../../themes'
 
 const BotoesControle = (props) => {
   const { responder, desabilitarBotao, verResposta, EhUltimaPergunta } = props
   return (
-    <View style={styles.containerBtn}>
-      <Button iconRight
-        style={styles.btnStyle}
+    <View style={styleButton.containerBtn}>
+      <TouchableOpacity iconRight
+        style={styleButton.styleBtnAtive}
         onPress={verResposta}>
-        <Text style={{ color: 'white' }}>Resposta Correta</Text>
-      </Button>
-      <Button disabled={desabilitarBotao}
+        <Text style={styleButton.btnTextAtive}>Resposta Correta</Text>
+      </TouchableOpacity>
+      <TouchableOpacity disabled={desabilitarBotao}
         iconLeft
         onPress={responder}
-        style={[styles.btnStyle, { backgroundColor: !desabilitarBotao ? 'orange' : 'gray' }]}>
+        style={ !desabilitarBotao ? styleButton.styleBtnAtive : styleButton.styleBtnInative }>
         <Text
-          style={{ paddingLeft: 10, paddingRight: 10, color: 'white' }}>
+          style={ !desabilitarBotao ? styleButton.btnTextAtive : styleButton.btnTextInative }>
           { EhUltimaPergunta
             ? 'Resultado'
             : 'Próxima Pergunta'
           }
         </Text>
-      </Button>
+      </TouchableOpacity>
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  containerBtn: {
-    flexDirection: "row",
-    flex: 1,
-    position: "relative",
-    top: 25,
-    marginBottom: 20,
-    left: 0,
-    right: 0,
-    justifyContent: 'space-between',
-    padding: 15
-  },
-  btnStyle: {
-    paddingLeft: 10,
-    paddingRight: 10,
-    backgroundColor: 'orange',
-  }
-})
 
 export default BotoesControle

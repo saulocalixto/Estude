@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { NavigationActions } from 'react-navigation'
-import { Button } from 'native-base';
 import { connect } from 'react-redux'
+import { styleButton, styleCard } from '../../themes'
 
 export const ResultadoQuiz = (props) => {
   const { pontuacao, indice, resetaQuiz, navigation, BtnText } = props;
   return (
-    <View style={styles.container}>
+    <View>
+    <View style={styleCard.cardStyle} >
       <Text style={BtnText ? BtnText : {}}>{`Você acertou ${pontuacao} de um total de ${indice} pergunta(s)`}</Text>
+    </View>
       <View
-        style={styles.containerBtn}>
-        <Button
-          iconRight
-          style={styles.btnStyle}
+        style={styleButton.containerBtn}>
+        <TouchableOpacity
+          style={styleButton.styleBtnAtive}
           onPress={() => navigation.dispatch(NavigationActions.reset({
             index: 1,
             actions: [
@@ -21,14 +22,13 @@ export const ResultadoQuiz = (props) => {
               NavigationActions.navigate({ routeName: 'DetalheBaralho' }),
             ]
           }))}>
-          <Text style={{ color: 'white' }}>Voltar ao baralho</Text>
-        </Button>
-        <Button
-          iconLeft
+          <Text style={styleButton.btnTextAtive}>Voltar ao baralho</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
           onPress={ resetaQuiz }
-          style={styles.btnStyle}>
-          <Text style={{ color: 'white' }}>Reiniciar Quiz</Text>
-        </Button>
+          style={ styleButton.styleBtnAtive }>
+          <Text style={ styleButton.btnTextAtive }>Reiniciar Quiz</Text>
+        </TouchableOpacity>
       </View>
     </View>
   )
@@ -36,27 +36,8 @@ export const ResultadoQuiz = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingLeft: 15,
-    paddingRight: 15,
-    flexDirection: 'column',
-    justifyContent: 'center'
-  },
-  containerBtn: {
-    flexDirection: "row",
-    flex: 1,
-    position: "relative",
-    top: 25,
-    marginBottom: 20,
-    left: 0,
-    right: 0,
-    justifyContent: 'space-between',
-    padding: 15
-  },
-  btnStyle: {
-    paddingLeft: 10,
-    paddingRight: 10,
-    backgroundColor: 'orange',
+    width: '100%',
+    height: '100%'
   }
 })
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Button, Card, CardItem, Icon, Right, Body, Container, Content, SwipeRow } from 'native-base';
 import { Feather } from '@expo/vector-icons'
 import { NavigationActions } from 'react-navigation'
@@ -8,6 +8,7 @@ import { removePergunta } from '../../actions'
 import { connect } from 'react-redux'
 import { MaterialIcons } from '@expo/vector-icons'
 import ListaVazia from './ListaVazia.js'
+import { styleButton } from '../../themes'
 
 class DetalheBaralho extends React.Component {
 
@@ -38,7 +39,8 @@ class DetalheBaralho extends React.Component {
                   body={
                     <View style={styles.posicaoItemsLinha}>
                       <Text style={{ color: '#FE6D38' }}>{x.pergunta}</Text>
-                      <MaterialIcons name='keyboard-arrow-left' size={25} style={{ color: '#FE6D38' }} />
+                      <MaterialIcons name='keyboard-arrow-left' size={25} 
+                      style={{ color: '#FE6D38' }} />
                     </View>
                   }
                   right={
@@ -56,21 +58,25 @@ class DetalheBaralho extends React.Component {
               )
           }
           <View 
-            style={ styles.containerBotoes }>
+            style={ styleButton.containerBtn }>
           <Feather onPress={() => this.props.navigation.navigate(
               'NovaPergunta',
               { baralho: baralho, tituloBaralho: baralho.titulo }
             )} name={'plus-circle'} size={40} style={{color: 'orange'}} />
-            <Button
-              iconLeft
-              onPress={() => 
+            <TouchableOpacity
+              disabled={!temPerguntas}
+              onPress={ () => 
                 this.props.navigation.navigate(
                 'ModalidadeQuiz',
-              )}
-              style={{ paddingLeft: 10, paddingRight: 10, backgroundColor: temPerguntas ? 'orange' : 'gray' }}
-              disabled={!temPerguntas}>
-              <Text style={{ color: 'white' }}>Iniciar Quiz</Text>
-            </Button>
+              ) }
+              style={ temPerguntas ?
+                 styleButton.styleBtnAtive : 
+                 styleButton.styleBtnInative } >
+              <Text 
+                style={ temPerguntas ? styleButton.btnTextAtive : styleButton.btnTextInative }>
+                  Iniciar Quiz
+                </Text>
+            </TouchableOpacity>
           </View>
         </Content>
       </Container>
@@ -79,16 +85,6 @@ class DetalheBaralho extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  containerBotoes: { 
-    flexDirection: "row", 
-    flex: 1, 
-    position: "relative", 
-    top: 25, 
-    marginBottom: 20, 
-    left: 0, right: 0, 
-    justifyContent: 'space-between', 
-    padding: 15 
-  },
   posicaoItemsLinha: {
     flexDirection: 'row',
     alignItems: 'center',

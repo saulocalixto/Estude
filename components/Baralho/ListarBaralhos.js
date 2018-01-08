@@ -3,6 +3,7 @@ import { View, TouchableOpacity, StyleSheet, Text } from "react-native";
 import { Button, SwipeRow, Icon } from 'native-base';
 import { connect } from 'react-redux'
 import { MaterialIcons } from '@expo/vector-icons'
+import { styleBaralhos } from '../../themes'
 
 const ListarBaralhos = (props) => {
   const { listaChaves, baralhos, setaBaralho, deleteBaralho } = props;
@@ -19,10 +20,10 @@ const ListarBaralhos = (props) => {
                 style={styles.containerLinha}>
                 <View style={styles.posicaoItemsLinha}>
                   <View>
-                    <Text style={{ fontSize: 25, color: '#D08401', padding: 10 }}>
+                    <Text style={styleBaralhos.titulo}>
                       {baralhos[chave].titulo}
                     </Text>
-                    <Text style={{ color: '#FEB638', paddingLeft: 10 }}>
+                    <Text style={{ color: '#9BADAD', paddingLeft: 10 }}>
                       {baralhos[chave].perguntas.length} carta(s)
                   </Text>
                   </View>

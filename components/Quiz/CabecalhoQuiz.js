@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
 import { CardItem, Thumbnail, Left, Body } from 'native-base';
 
 
