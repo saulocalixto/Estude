@@ -6,6 +6,7 @@ import CabecalhoQuiz from './CabecalhoQuiz.js'
 import { NavigationActions } from 'react-navigation'
 import { clearLocalNotification, setLocalNotification } from '../../utils/helpers'
 import ResultadoQuiz from './ResultadoQuiz.js'
+import { styleCard } from '../../theme'
 import BotoesControle from './BotoesControle.js'
 import {
   Container,
@@ -155,7 +156,8 @@ class MultiploQuiz extends Component {
                   pontuacao={pontuacao}
                   indice={indice}
                   resetaQuiz={() => this.setState({ indice: 0, pontuacao: 0 })}
-                  navigation={this.props.navigation} />
+                  navigation={this.props.navigation} 
+                  BtnText={ [ styleCard.cardText, { fontSize: 15 } ] }/>
               )
             }
           </Card>

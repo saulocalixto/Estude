@@ -1,12 +1,13 @@
 import React from "react";
-import { View, TouchableOpacity, StyleSheet, Text } from "react-native";
-import { Button, Card, CardItem, Container, Content, SwipeRow } from 'native-base';
+import { View, StyleSheet } from "react-native";
+import { Button, Container, Content } from 'native-base';
 import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
 import { fetchPegarBaralhos, fetchRemoveBaralho, pegaDetalhes } from '../../actions'
 import { Feather } from '@expo/vector-icons'
 import ListarBaralhos from './ListarBaralhos.js'
 import ListaVazia from './ListaVazia.js'
+import { styleButton } from '../../theme'
 
 class HomeBaralho extends React.Component {
 

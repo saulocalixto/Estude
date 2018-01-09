@@ -1,31 +1,31 @@
 import { StyleSheet } from 'react-native';
 
 export const cores = {
-  titulo: '#809397',
+  titulo: '#54504E',
+  subTitulo: '#9BADAD',
   botaoAtivo: '#ff6600',
   botaoInativo: '#D4CEC9',
   textoBotao: '#8A8685'
 };
 
-export const styleBaralhos = {
+export const styleBaralhos = StyleSheet.create({
   titulo: {
     color: cores.titulo,
     fontSize: 25,
     padding: 10,
   },
-}
+  subTitulo: {
+    color: cores.subTitulo,
+    padding: 10,
+  }
+})
 
 export const styleButton = StyleSheet.create({
   containerBtn: {
     flexDirection: "row",
-    flex: 1,
-    position: "relative",
-    top: 25,
     marginBottom: 20,
-    left: 0,
-    right: 0,
     justifyContent: 'space-between',
-    padding: 15
+    padding: 15,
   },
   styleBtnAtive: {
     paddingLeft: 15,
@@ -41,7 +41,7 @@ export const styleButton = StyleSheet.create({
   },
   btnTextAtive: {
     color: cores.textoBotao,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   styleBtnInative: {
     paddingLeft: 15,
@@ -62,19 +62,29 @@ export const styleButton = StyleSheet.create({
 })
 
 export const styleCard = StyleSheet.create({
+  cardText: {
+    fontSize: 30,
+    textAlign: 'center',
+    color: cores.titulo,
+  },
   cardStyle: {
+    backgroundColor: '#EF6621',
     paddingLeft: 15,
     paddingRight: 15,
     paddingTop: 15,
     paddingBottom: 15,
-    backgroundColor: 'transparent',
     height: 'auto',
     width: '100%',
-    borderColor: cores.botaoAtivo,
-    borderStyle: 'solid',
-    borderWidth: 2,
-    borderRadius: 5,
+    borderRadius: 15,
+    marginBottom: 10,
     justifyContent: 'center',
     flexDirection: 'column',
+    shadowOffset: {
+      width: 1,
+      height: 1,
+    },
+    shadowColor: 'rgba(0,0,0,0.1)',
+    shadowOpacity: 4,
+    elevation: 3,
   }
 })

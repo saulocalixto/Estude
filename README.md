@@ -1,6 +1,7 @@
-# Mobile Cards
+# Estude!
 Projeto feito para o curo Nanodegree Desenvolvedor React da Udacity, módulo de React Native.
-Consiste em um aplicativo no qual é possível fazer revisão de matérias. O usuário pode cadastrar
+Consiste em um aplicativo no qual é possível fazer revisão de matérias através
+de perguntas e respostas que ele mesmo cadastra para revisão. O usuário pode cadastrar
 um baralho que representa um grupo de perguntas de determinado assunto, e dentro desse baralho o usuário
 poderá cadastrar "cartas", as quais representam as perguntas que o usuário poderá responder.
 Há duas modalidade de quiz: *Múltipla Escolha* e *Flash Cards*.

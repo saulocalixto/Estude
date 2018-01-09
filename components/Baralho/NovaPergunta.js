@@ -6,7 +6,7 @@ import { submitBaralho, removeBaralho } from '../../utils/api.js'
 import { addBaralho, addPergunta } from '../../actions'
 import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
-import { styleButton } from '../../themes'
+import { styleButton } from '../../theme'
 
 class NovaPergunta extends React.Component {
 

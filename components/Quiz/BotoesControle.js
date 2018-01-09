@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { Button } from 'native-base';
-import { styleButton } from '../../themes'
+import { styleButton } from '../../theme'
 
 const BotoesControle = (props) => {
   const { responder, desabilitarBotao, verResposta, EhUltimaPergunta } = props

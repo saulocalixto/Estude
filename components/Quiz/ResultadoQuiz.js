@@ -2,14 +2,16 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { NavigationActions } from 'react-navigation'
 import { connect } from 'react-redux'
-import { styleButton, styleCard } from '../../themes'
+import { styleButton, styleCard } from '../../theme'
 
 export const ResultadoQuiz = (props) => {
   const { pontuacao, indice, resetaQuiz, navigation, BtnText } = props;
   return (
     <View>
     <View style={styleCard.cardStyle} >
-      <Text style={BtnText ? BtnText : {}}>{`Você acertou ${pontuacao} de um total de ${indice} pergunta(s)`}</Text>
+      <Text style={BtnText ? BtnText : {}}>
+        {`Você acertou ${pontuacao} de um total de ${indice} pergunta(s).`}
+      </Text>
     </View>
       <View
         style={styleButton.containerBtn}>
@@ -33,12 +35,5 @@ export const ResultadoQuiz = (props) => {
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    height: '100%'
-  }
-})
 
 export default connect()(ResultadoQuiz)

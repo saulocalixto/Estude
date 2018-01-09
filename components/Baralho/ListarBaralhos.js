@@ -3,7 +3,7 @@ import { View, TouchableOpacity, StyleSheet, Text } from "react-native";
 import { Button, SwipeRow, Icon } from 'native-base';
 import { connect } from 'react-redux'
 import { MaterialIcons } from '@expo/vector-icons'
-import { styleBaralhos } from '../../themes'
+import { styleBaralhos } from '../../theme'
 
 const ListarBaralhos = (props) => {
   const { listaChaves, baralhos, setaBaralho, deleteBaralho } = props;

@@ -1,14 +1,13 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { Button, Card, CardItem, Icon, Right, Body, Container, Content, SwipeRow } from 'native-base';
+import { Button, Icon, Container, Content, SwipeRow } from 'native-base';
 import { Feather } from '@expo/vector-icons'
-import { NavigationActions } from 'react-navigation'
 import { submitBaralho, removeBaralho } from '../../utils/api.js'
 import { removePergunta } from '../../actions'
 import { connect } from 'react-redux'
 import { MaterialIcons } from '@expo/vector-icons'
 import ListaVazia from './ListaVazia.js'
-import { styleButton } from '../../themes'
+import { styleButton, styleBaralhos } from '../../theme'
 
 class DetalheBaralho extends React.Component {
 
@@ -27,9 +26,11 @@ class DetalheBaralho extends React.Component {
     return (
       <Container style={{ padding: 10, backgroundColor: 'white' }}>
         <Content>
-          <Text style={{ fontSize: 30, color: '#D08401' }}>{baralho.titulo}</Text>
+          <Text style={ styleBaralhos.titulo }>{baralho.titulo}</Text>
 
-          <Text style={{ color: '#FEB638', marginBottom: 10 }}>{baralho.descricao}</Text>
+          <Text style={ [styleBaralhos.subTitulo, {paddingTop: 0}] }>
+            {baralho.descricao}
+          </Text>
           {
             baralho.perguntas.length !== 0 ? (
               baralho.perguntas.map(x => (

@@ -1,11 +1,11 @@
 import React from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
-import { styleButton } from '../../themes'
+import { styleButton } from '../../theme'
 
 const BotoesAcertoErro = (props) => {
   const { marcarAcerto, marcarErro,  } = props
   return (
-    <View style={{ flexDirection: "row", justifyContent: 'space-between', alignItems: 'flex-end', padding: 15 }}>
+    <View style={ styleButton.containerBtn }>
       <TouchableOpacity
         style={styleButton.styleBtnAtive}
         onPress={marcarAcerto}>

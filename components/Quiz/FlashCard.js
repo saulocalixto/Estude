@@ -6,7 +6,7 @@ import { clearLocalNotification, setLocalNotification } from '../../utils/helper
 import ResultadoQuiz from './ResultadoQuiz.js'
 import { connect } from 'react-redux'
 import BotoesAcertoErro from './BotoesAcertoErro.js'
-import { styleCard } from '../../themes'
+import { styleCard } from '../../theme'
 
 class FlashCard extends Component {
 
@@ -35,12 +35,15 @@ class FlashCard extends Component {
     return (
       <View style={styles.container}>
         {indice !== qtdPerguntas ? (
+          <View>
           <TouchableOpacity onPress={() => this.setState({ mostrarResposta: !mostrarResposta })}>
-            <View style={styleCard.cardStyle}>
-              <Text style={styles.BtnText}>
+            <View style={ styleCard.cardStyle }>
+              <Text style={ styleCard.cardText }>
                 {mostrarResposta ? pergunta.resposta : pergunta.pergunta}
               </Text>
-              {mostrarResposta ? (
+            </View>
+          </TouchableOpacity>
+          {mostrarResposta ? (
                 <BotoesAcertoErro
                   marcarAcerto={() => {
                     this.setState({
@@ -65,17 +68,14 @@ class FlashCard extends Component {
                     </Text>
                   </View>
                 )}
-            </View>
-          </TouchableOpacity>
+          </View>
         ) : (
-            <View>
               <ResultadoQuiz
                 pontuacao={pontuacao}
                 indice={indice}
                 resetaQuiz={() => this.setState({ indice: 0, pontuacao: 0 })}
                 navigation={this.props.navigation}
-                BtnText={styles.BtnText} />
-            </View>
+                BtnText={ styleCard.cardText } />
           )}
       </View>
     );
@@ -90,16 +90,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     flexDirection: 'column',
     justifyContent: 'center'
-  },
-  containerBtn: {
-    flexDirection: "row",
-    justifyContent: 'space-between',
-    padding: 15
-  },
-  BtnText: {
-    color: '#ff6600',
-    fontSize: 30,
-    textAlign: 'center'
   },
 })
 
